@@ -1,13 +1,17 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import VoiceVisualizer from "./components/VoiceVisualizer";
+import { translateWithOpenAI } from "./services/translate";
 
 function App() {
   const [text, setText] = useState("");
+  const [textTraslated, setTextTraslated] = useState("");
   const [loading, setLoading] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   const startListening = () => {
+    setText("");
+    setTextTraslated("");
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
@@ -43,10 +47,19 @@ function App() {
     recognition.start();
   };
 
-  const stopListening = () => {
+  const stopListening = async () => {
     recognitionRef.current?.stop();
-    setLoading(false);
   };
+
+  useEffect(() => {
+    const traslate = async () => {
+      const response = await translateWithOpenAI(text);
+      console.log("response", response);
+      setTextTraslated(response?.choices[0].message.content);
+      setLoading(false);
+    };
+    traslate();
+  }, [text]);
 
   return (
     <div style={{ padding: 20 }}>
@@ -58,10 +71,16 @@ function App() {
           <button onClick={stopListening}>🛑 Detener</button>
         </>
       )}
-
-      <p style={{ marginTop: 20 }}>
-        <strong>{text}</strong>
-      </p>
+      {text && (
+        <p className="text-md text-blue-400">
+          <strong>{text}</strong>
+        </p>
+      )}
+      {textTraslated && (
+        <p className="text-xl text-amber-300 ">
+          <strong>{textTraslated}</strong>
+        </p>
+      )}
     </div>
   );
 }
