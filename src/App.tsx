@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import VoiceVisualizer from "./components/VoiceVisualizer";
-import { translateWithOpenAI } from "./services/translate";
+import { translateWithOpenAI } from "./services/traslate";
 
 function App() {
   const [text, setText] = useState("");
@@ -55,7 +55,7 @@ function App() {
     const traslate = async () => {
       const response = await translateWithOpenAI(text);
       console.log("response", response);
-      setTextTraslated(response?.choices[0].message.content);
+      setTextTraslated(response?.choices[0].message.content || "");
       setLoading(false);
     };
     traslate();
