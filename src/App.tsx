@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import VoiceVisualizer from "./components/VoiceVisualizer";
+// import VoiceVisualizer from "./components/VoiceVisualizer";
 import { translateWithOpenAI } from "./services/traslate";
 
 function App() {
@@ -67,7 +67,7 @@ function App() {
       <button onClick={startListening}>🎙️ Empezar</button>
       {loading && (
         <>
-          <VoiceVisualizer />
+          {/* <VoiceVisualizer /> */}
           <button onClick={stopListening}>🛑 Detener</button>
         </>
       )}
