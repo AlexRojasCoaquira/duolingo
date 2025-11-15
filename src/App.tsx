@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 // import VoiceVisualizer from "./components/VoiceVisualizer";
 import { translateWithOpenAI } from "./services/traslate";
+import { textToSpeech } from "./services/evenlabs";
 
 function App() {
   const [text, setText] = useState("");
@@ -55,8 +56,10 @@ function App() {
     const traslate = async () => {
       const response = await translateWithOpenAI(text);
       console.log("response", response);
-      setTextTraslated(response?.choices[0].message.content || "");
+      const translated = response?.choices?.[0]?.message?.content?.trim() || "";
+      setTextTraslated(translated);
       setLoading(false);
+      textToSpeech(translated);
     };
     traslate();
   }, [text]);
