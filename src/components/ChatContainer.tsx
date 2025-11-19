@@ -48,7 +48,8 @@ export const ChatContainer = ({ resetTopic, topic }: ChatContainerProps) => {
       if (isListening) {
         console.log("terminamos");
         stopListening((finalText) => {
-          setChat((prev) => [...prev, { text: finalText, isUser: true }]);
+          addMessageToChat(finalText);
+          // setChat((prev) => [...prev, { text: finalText, isUser: true }]);
         });
       } else {
         console.log("empezamos");
