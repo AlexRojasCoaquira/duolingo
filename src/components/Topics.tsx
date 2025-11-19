@@ -9,7 +9,7 @@ interface TopicsProps {
 }
 
 export const Topics = ({ onSelectTopic, selectedTopic }: TopicsProps) => {
-  const { topics, getAllTopics } = useTopics();
+  const { topics, getAllTopics, loading } = useTopics();
   useEffect(() => {
     getAllTopics();
   }, []);
@@ -17,9 +17,19 @@ export const Topics = ({ onSelectTopic, selectedTopic }: TopicsProps) => {
   return (
     <div className="text-center">
       <p className="text-gray-100">Seleccione el tema de su preferencia...</p>
-
+      {loading && (
+        <div
+          className={`flex items-center justify-center w-full backdrop-blur-sm mt-5
+         transition-all${
+           loading ? "opacity-100" : "opacity-0 pointer-events-none"
+         }`}
+        >
+          <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-10 justify-center mt-5">
-        {topics &&
+        {!loading &&
+          topics &&
           topics.map((topic) => (
             <div
               className="relative cursor-pointer hover:scale-110 transition-all duration-300 group overflow-hidden rounded-lg border-gray-300  hover:border-amber-300 border-2"

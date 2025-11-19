@@ -3,11 +3,15 @@ import { Topics } from "./components/Topics";
 import type { Topic } from "./types/topics";
 import { ChatContainer } from "./components/ChatContainer";
 import { Ticker } from "./components/Ticker";
+import { createConversation } from "./services/chats";
 
 function App() {
   const [topic, setTopic] = useState<Topic | null>(null);
+  const [conversation, setConversation] = useState("");
 
-  const selectTopic = (topic: Topic) => {
+  const selectTopic = async (topic: Topic) => {
+    const res = await createConversation(topic);
+    setConversation(res[0].id);
     setTopic(topic);
   };
 
@@ -17,6 +21,7 @@ function App() {
         <ChatContainer
           resetTopic={() => setTopic(null)}
           topic={topic}
+          conversation={conversation}
         ></ChatContainer>
       ) : (
         <>

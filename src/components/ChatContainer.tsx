@@ -6,13 +6,19 @@ import { useRecognition } from "../hooks/useRecognition";
 import type { Message } from "../types/chat";
 import { translateWithOpenAI } from "../services/traslate";
 import type { Topic } from "../types/topics";
+import { createChat } from "../services/chats";
 
 interface ChatContainerProps {
   resetTopic: () => void;
   topic?: Topic;
+  conversation: string;
 }
 
-export const ChatContainer = ({ resetTopic, topic }: ChatContainerProps) => {
+export const ChatContainer = ({
+  resetTopic,
+  topic,
+  conversation,
+}: ChatContainerProps) => {
   const { startListening, isListening, stopListening } = useRecognition();
   const [chat, setChat] = useState<Message[]>([]);
   const [message, setMessage] = useState("");
@@ -27,13 +33,16 @@ export const ChatContainer = ({ resetTopic, topic }: ChatContainerProps) => {
     if (!msg || !topic) return;
     const response = await translateWithOpenAI(msg, topic);
     const translated = response?.choices?.[0]?.message?.content?.trim() || "";
+    const message = { text: translated, isUser: false };
     setChat((prev) => [...prev, { text: translated, isUser: false }]);
+    await createChat(conversation, message);
   };
 
   const addMessageToChat = async (msg: string) => {
     if (!msg.trim()) return;
-
-    setChat((prev) => [...prev, { text: msg, isUser: true }]);
+    const message = { text: msg, isUser: true };
+    setChat((prev) => [...prev, message]);
+    await createChat(conversation, message);
     await traslate(msg);
     setMessage("");
   };
