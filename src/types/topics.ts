@@ -1,6 +1,6 @@
 export interface Topic {
-  name: string;
+  title: string;
   image: string;
-  value: string;
+  slug: string;
   prompt: string;
 }

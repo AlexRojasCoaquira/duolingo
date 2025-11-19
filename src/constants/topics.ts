@@ -27,7 +27,7 @@ export const topics: Topic[] = [
   },
   {
     name: "Música",
-    value: "música",
+    value: "music",
     image:
       "https://i.pinimg.com/736x/84/f1/f0/84f1f0819f62ed6559faabe3504f9842.jpg",
     prompt:

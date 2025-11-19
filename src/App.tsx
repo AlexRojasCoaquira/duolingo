@@ -6,6 +6,7 @@ import { Ticker } from "./components/Ticker";
 
 function App() {
   const [topic, setTopic] = useState<Topic | null>(null);
+
   const selectTopic = (topic: Topic) => {
     setTopic(topic);
   };
