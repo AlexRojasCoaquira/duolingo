@@ -17,17 +17,27 @@ export const translateWithOpenAI = (text: string, topic: Topic) => {
   return response;
 };
 
-export const translateWithLibreTranslate = (text: string) => {
-  fetch("https://libretranslate.com/translate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      q: text,
-      source: "es",
-      target: "en",
-      format: "text",
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => console.log(data.translatedText));
+export const translateFree = async (text: string): Promise<string> => {
+  try {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
+      text
+    )}&langpair=en|es`;
+
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      throw new Error(`HTTP error: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    if (!data?.responseData?.translatedText) {
+      throw new Error("Translation failed: Missing translatedText");
+    }
+
+    return data.responseData.translatedText;
+  } catch (error) {
+    console.error("Translation error:", error);
+    return "Translation unavailable";
+  }
 };

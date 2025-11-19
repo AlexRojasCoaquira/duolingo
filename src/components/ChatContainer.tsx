@@ -161,7 +161,7 @@ export const ChatContainer = ({ resetTopic, topic }: ChatContainerProps) => {
                 ))}
             </div>
           </div>
-          <div className="flex gap-4 border-t h-20 items-center justify-center px-10 shrink-0 mt-auto">
+          <div className="flex gap-4 border-t h-20 items-center justify-center px-2 md:px-10 shrink-0 mt-auto">
             <div className="w-full">
               <input
                 className="bg-[#F5F5F5] py-3 px-5 rounded-xl w-full"
