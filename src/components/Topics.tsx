@@ -19,7 +19,7 @@ export const Topics = ({ onSelectTopic, selectedTopic }: TopicsProps) => {
       <p className="text-gray-100">Seleccione el tema de su preferencia...</p>
       {loading && (
         <div
-          className={`flex items-center justify-center w-full backdrop-blur-sm mt-5
+          className={`flex items-center justify-center w-full backdrop-blur-sm mt-2
          transition-all${
            loading ? "opacity-100" : "opacity-0 pointer-events-none"
          }`}
@@ -27,7 +27,7 @@ export const Topics = ({ onSelectTopic, selectedTopic }: TopicsProps) => {
           <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
-      <div className="grid grid-cols-2 gap-10 justify-center mt-5">
+      <div className="grid grid-cols-2 gap-10 justify-center mt-2">
         {!loading &&
           topics &&
           topics.map((topic) => (

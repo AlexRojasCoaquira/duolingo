@@ -1,11 +1,10 @@
 import { supabase } from "../lib/supabase";
 import { type Topic } from "../types/topics";
-import { type Message } from "../types/chat";
+import type { Conversation, Message } from "../types/chat";
 
 export const getTopics = async () => {
   try {
     const { data, error } = await supabase.from("topics").select("*");
-    console.log("hoalnd", data);
     if (error) throw new Error(error.message);
     return data;
   } catch (error) {
@@ -21,7 +20,7 @@ export const createConversation = async (topic: Topic) => {
       .insert([
         {
           topic_id: topic.id,
-          title: "Conversación",
+          title: `hablando sobre ${topic.title}`,
         },
       ])
       .select();
@@ -31,6 +30,12 @@ export const createConversation = async (topic: Topic) => {
     console.error("❌ Error al agregar producto:", (error as Error).message);
     throw new Error("No se pudo agregar el producto. Intenta nuevamente.");
   }
+};
+
+export const getConversations = async (): Promise<Conversation[]> => {
+  const { data, error } = await supabase.from("conversations").select("*");
+  if (error) throw new Error(error.message);
+  return data;
 };
 
 export const createChat = async (conversationId: string, chat: Message) => {

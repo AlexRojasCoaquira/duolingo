@@ -26,12 +26,12 @@ function App() {
       ) : (
         <>
           <div className="bg-gray-900 min-h-dvh p-5 h-full">
-            <div className="max-w-5xl mx-auto flex flex-col items-center gap-10 h-full">
+            <div className="max-w-5xl mx-auto flex flex-col items-center gap-5 h-full">
               <h1 className="text-3xl text-white text-center font-semibold">
                 Dua lingo
               </h1>
               <Topics selectedTopic={topic} onSelectTopic={selectTopic} />
-              <div className="w-sm mt-20">
+              <div className="w-sm">
                 <Ticker />
               </div>
             </div>

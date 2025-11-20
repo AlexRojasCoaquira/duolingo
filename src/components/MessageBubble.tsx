@@ -45,7 +45,7 @@ export const MessageBubble = ({ isUser, text }: MessageBubble) => {
         </div>
 
         {!isUser && (
-          <div className={`relative opacity-0 group-hover:opacity-100 `}>
+          <div className={`relative opacity-100 group-hover:opacity-100 `}>
             <span
               className="pointer-events-auto cursor-pointer"
               onClick={() => setOpen(!open)}

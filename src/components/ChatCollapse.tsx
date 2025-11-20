@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useConversation } from "../hooks/useConversation";
+import { formatDateTime } from "../utils/date";
 
 export const ChatCollapse = () => {
   const [collapse, setCollapse] = useState(false);
+  const { conversationList, getAllConversation } = useConversation();
+
+  useEffect(() => {
+    getAllConversation();
+  }, []);
 
   return (
     <div
-      className={`max-w-sm bg-[#161717] hidden md:block transition-all duration-500 ${
+      className={`max-w-sm bg-[#161717] hidden md:flex transition-all duration-500 h-dvh flex-col ${
         !collapse ? "w-100" : "w-20"
       }`}
     >
       <div
-        className={`flex items-center h-20 px-4 ${
+        className={`flex items-center h-20 px-4  ${
           collapse ? "justify-center" : "justify-between"
         }`}
       >
@@ -41,15 +48,19 @@ export const ChatCollapse = () => {
         </button>
       </div>
       {!collapse && (
-        <div className=" flex flex-col gap-2 mt-5 px-2">
-          <div className="h-20  rounded-xl overflow-hidden p-3 text-white hover:bg-[#2E2F2F] cursor-pointer">
-            Conversación 1
-          </div>
-          <div className="h-20  rounded-xl overflow-hidden p-3 text-white hover:bg-[#2E2F2F] cursor-pointer">
-            Conversación 2
-          </div>
-          <div className="h-20  rounded-xl overflow-hidden p-3 text-white hover:bg-[#2E2F2F] cursor-pointer">
-            Conversación 3
+        <div className="overflow-y-auto flex-1">
+          <div className="relative flex flex-col gap-2 mt-5 px-2 ">
+            {conversationList.map((conv) => (
+              <div
+                key={conv.id}
+                className="relative bottom-0 h-18 rounded-xl overflow-hidden p-3 text-white hover:bg-[#2E2F2F] cursor-pointer"
+              >
+                {conv.title}
+                <span className="absolute bottom-2 right-2 font-light text-xs">
+                  {formatDateTime(conv.created_at)}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       )}

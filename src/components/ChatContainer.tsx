@@ -55,13 +55,10 @@ export const ChatContainer = ({
   const handleClick = () => {
     if (message.trim() === "") {
       if (isListening) {
-        console.log("terminamos");
         stopListening((finalText) => {
           addMessageToChat(finalText);
-          // setChat((prev) => [...prev, { text: finalText, isUser: true }]);
         });
       } else {
-        console.log("empezamos");
         startListening();
       }
     } else {
@@ -84,7 +81,9 @@ export const ChatContainer = ({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[auto_1fr]">
-      <ChatCollapse />
+      <div className="h-full">
+        <ChatCollapse />
+      </div>
       <div className="bg-[#1D1F1F] w-full relative">
         <div
           className="
@@ -122,7 +121,9 @@ export const ChatContainer = ({
                   />
                 </svg>
               </button>
-              <div className="border rounded-full size-10 border-white"></div>
+              <div className="size-10">
+                <img src="/alexdev-mob.svg" alt="avatar" />
+              </div>
               <div className="text-white leading-5">
                 <p>Rommel Rojas</p>
                 <span className="text-[#81BF84] text-sm">Online</span>
